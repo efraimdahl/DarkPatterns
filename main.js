@@ -20,7 +20,7 @@ for(let i = 0;i<lables.length;i++){
 function confirmSelection(){
     console.log("change page")
     if(!lab1.hasAttribute("checked")){
-        alert("the striclye necessary cookies need to be enabled to continue to the site")
+        alert("the strictly necessary cookies need to be enabled to continue to the site")
     }
     else{
         for(let i = 0;i<lables.length;i++){
