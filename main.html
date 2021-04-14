@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="style.css">
+    <title>Dark Patterns Test</title>
+</head>
+
+<body>
+    <div class="tasks">
+        <!-- title -->
+        <h1>Please set your cookies before continuing to the site</h1>
+        <!-- task 1 -->
+        <p>Our page uses cookies to provide the best possible user experience</p>
+        <input id='label-1' type='checkbox' />
+        <label for='label-1'>
+            <h2>Strictly Necessary
+                <span>cookies needed for basic site functionality</span>
+            </h2>
+        </label>
+        <!-- task 2 -->
+        <input id='label-2' type='checkbox' />
+        <label for='label-2'>
+            <h2>Performance Cookies
+                <span>Cookies we need to measure site data, to build the best product possible</span>
+            </h2>
+        </label>
+        <!-- task 3 -->
+        <input id='label-3' type='checkbox' />
+        <label for='label-3'>
+            <h2>Functional Cookies
+                <span>Cookies that allow us to personalize our content according to your preferences</span>
+            </h2>
+        </label>
+        <!-- task 4 -->
+        <input id='label-4' type='checkbox' />
+        <label for='label-4'>
+            <h2>Targeting Cookies
+                <span>Invasive cookies you should avoid at all cost</span>
+            </h2>
+        </label>
+        <button id="confirm">
+            <h2>Confirm Choice</h2>
+        </button>
+    </div>
+    <div id="myModal" class="modal">
+
+        <!-- Modal content from https://www.w3schools.com/howto/howto_css_modals.asp-->
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <img class="modalImg"
+                src="https://peewee.com/wp-content/uploads/2014/11/cookie-monster-birthday-4.jpg"></img>
+            <p>The cookies have been optimally set, confirm choice to continue to the main page
+            <p>
+                <button id="confirm2">
+                    <h2>Confirm Choice</h2>
+                </button>
+        </div>
+    </div>
+    <div id="myModal2" class="modal">
+
+        <!-- Modal content from https://www.w3schools.com/howto/howto_css_modals.asp-->
+        <div class="modal-content">
+            <span class="close2">&times;</span>
+            <img class="modalImg" src="https://i.redd.it/dck8vkjvavg51.jpg"></img>
+            <p>Your choice has made the cookie monster very sad
+            <p>
+                <button id="reset">
+                    <h2>Reset the settings</h2>
+                </button>
+                <button id="continue">
+                    <p>No! I am a monster myself</p>
+                </button>
+        </div>
+    </div>
+    <script>
+        let lab1 = document.getElementById("label-1")
+        let lab2 = document.getElementById("label-2")
+        let lab3 = document.getElementById("label-3")
+        let lab4 = document.getElementById("label-4")
+
+        let lables = [lab1, lab2, lab3, lab4]
+        let lableNames = ["lab1", "lab2", "lab3", "lab4"]
+        let lockedIn = ""
+
+        let modal2 = document.getElementById("myModal2");
+
+        for (let i = 0; i < lables.length; i++) {
+            lables[i].setAttribute("checked", "true")
+            lables[i].addEventListener("click", () => {
+                if (lables[i].hasAttribute("checked")) {
+                    lables[i].removeAttribute("checked")
+                } else {
+                    lables[i].setAttribute("checked", "true")
+                }
+            })
+        }
+        function confirmSelection() {
+            console.log("change page")
+            if (!lab1.hasAttribute("checked")) {
+                alert("the strictly necessary cookies need to be enabled to continue to the site")
+            }
+            else {
+                if (!lab4.hasAttribute("checked")) {
+                    modal2.style.display = "block";
+                }
+                else {
+                    for (let i = 0; i < lables.length; i++) {
+                        console.log(i)
+                        if (lables[i].hasAttribute("checked")) {
+                            console.log(lableNames[i] + " " + " is checked")
+                            lockedIn += ("#" + lableNames[i])
+                        }
+                    }
+                    window.location.href = "index.html" + lockedIn + "#c";
+                    lockedIn = ""
+                }
+            }
+        }
+        //https://stackoverflow.com/questions/2705583/how-to-simulate-a-click-with-javascript
+        function eventFire(el, etype) {
+            if (el.fireEvent) {
+                el.fireEvent('on' + etype);
+            } else {
+                var evObj = document.createEvent('Events');
+                evObj.initEvent(etype, true, false);
+                el.dispatchEvent(evObj);
+            }
+        }
+        let conf = document.getElementById("confirm");
+        conf.addEventListener("click", confirmSelection)
+        let conf2 = document.getElementById("confirm2");
+        conf2.addEventListener("click", confirmSelection)
+        let conf3 = document.getElementById("continue");
+        conf3.addEventListener("click", () => {
+            for (let i = 0; i < lables.length; i++) {
+                console.log(i)
+                if (lables[i].hasAttribute("checked")) {
+                    lockedIn += ("#" + lableNames[i])
+                }
+            }
+            window.location.href = "index.html" + lockedIn;
+            lockedIn = ""
+        })
+        // Get the modal
+        let modal = document.getElementById("myModal");
+        // Get the <span> element that closes the modal
+        let span = document.getElementsByClassName("close")[0];
+        modal.style.display = "block";
+        span.onclick = function () {
+            modal.style.display = "none";
+            lockedIn += "#x"
+        }
+        let reset = document.getElementById("reset")
+        reset.addEventListener("click", () => {
+            window.location.reload(true);
+            
+        })
+        let span2 = document.getElementsByClassName("close2")[0];
+        span2.onclick = function () {
+            modal2.style.display = "none"
+
+        }
+
+       
+
+    </script>
+</body>
+
+</html>

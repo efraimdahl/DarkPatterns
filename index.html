@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="style.css">
+  <title>Dark Patterns Test</title>
+</head>
+<body>
+    <h1>Thank you for participating</h1>
+    <div class="tasks idxPage">
+        <p>Now please copy the content of the textboard to your clipboard (ctrl+c on windows) (command+c on mac)</p>
+        <textarea type="text" id="txtbox"></textarea>
+        <p>Follow this <a href = "survey.com">link</a> to continue to the survey</p>
+    </div>
+    <script>
+                
+        function updateIndexPage(){
+            console.log('loading new page')
+            txtbx = document.getElementById('txtbox')
+            txtbx.value=window.location.hash
+            console.log(window.location.hash)
+        }
+        updateIndexPage()
+    </script>
+</body>
